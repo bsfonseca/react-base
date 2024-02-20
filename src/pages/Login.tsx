@@ -1,13 +1,41 @@
-import { Container } from "@mui/material";
+import { Button, Card, Container, Grid, TextField } from "@mui/material";
 import { Header } from "../components/Header";
 
+//PreventDefault serve para não submeter automaticamente prevenindo
 export const Login = () => {
+    const submeterLogin = (event: any) => {
+        event.preventDefault();
+
+        const data = {
+            email: event.target.email.value,
+            senha: event.target.senha.value,
+        };
+
+        console.log(data);
+    };
+
     return (
         <>
             <Header />
             <Container>
-                <h1>Hello world</h1>
-                <h5>This is the home page</h5>
+                <h1>Faça o seu login</h1>
+                <Card>
+                    <form onSubmit={submeterLogin}>
+                        <Grid container spacing={2} padding={2}>
+                            <Grid item xs={12} md={6}>
+                                <TextField fullWidth name="email" label="E-mail" type="email" />
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                                <TextField fullWidth name="senha" label="Senha" type="password" />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Button type="submit" variant="contained">
+                                    Realizar login
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </form>
+                </Card>
             </Container>
         </>
     );

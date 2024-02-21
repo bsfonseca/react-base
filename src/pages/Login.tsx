@@ -1,17 +1,30 @@
 import { Button, Card, Container, Grid, TextField } from "@mui/material";
 import { Header } from "../components/Header";
+import { LoginDTO } from "../models/login.model";
+import { useAppDispatch } from "../config/hooks";
+import { realizarLoginThunk } from "../config/modules/aluno.slice";
+import { useNavigate } from "react-router-dom";
 
 //PreventDefault serve para não submeter automaticamente prevenindo
+//Pesquisar sobre SOLID
+
 export const Login = () => {
-    const submeterLogin = (event: any) => {
+    const disptach = useAppDispatch();
+    const navigate = useNavigate();
+
+    const submeterLogin = async (event: any) => {
         event.preventDefault();
 
-        const data = {
+        const data: LoginDTO = {
             email: event.target.email.value,
             senha: event.target.senha.value,
         };
 
-        console.log(data);
+        const aluno = await disptach(realizarLoginThunk(data)).unwrap();
+
+        if (aluno) {
+            navigate("/");
+        }
     };
 
     return (
